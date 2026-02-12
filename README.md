@@ -7,4 +7,5 @@ LabVIEW
 Steps:
 1. Work towards perfecting method for finding ellipse's circumeference
 2. Test with other shapes and modify method if needed
-3. Implement ML for program to identify shape from pdf input
+3. Implement a interactive pop-up that tracks and records (x,y) coordinates for a custom shape drawn
+4. Implement ML/Contour Extraction for program to identify shape from pdf input.
