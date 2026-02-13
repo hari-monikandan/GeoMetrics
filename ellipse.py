@@ -5,12 +5,12 @@ import math
 a = input('What is the value of semi-major axis?')
 b = input('What is the value of semi-minor axis?')
 
-major = int(a)
-minor = int(a)
+major = float(a)
+minor = float(b)
 
 # Creating a list of x-values between (0,0) and (a,0). Total circumference is 4 times the first quadrant
 
-x_values = np.linspace(0,major,100)
+x_values = np.linspace(0,major,10000)
 
 # Formula for an ellipse is y = sqrt(a^2 - x^2)*(b/a). So finding y values for corresponding x points.
 
