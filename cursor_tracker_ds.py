@@ -13,7 +13,7 @@ try:
         x, y = pyautogui.position()
         positionStr = 'X: ' + str(x).rjust(4) + ' Y: ' + str(y).rjust(4)
         print(positionStr, end='')
-        print('\b' * len(positionStr), end='', flush=True)
+        print('\b' * len(positionStr), end='')
         list_coordinates.append(tuple((x,y)))
 except KeyboardInterrupt:
     plt.plot([(x[0]) for x in list_coordinates], [(1079 - y[1]) for y in list_coordinates])
