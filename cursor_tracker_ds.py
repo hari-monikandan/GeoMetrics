@@ -16,6 +16,6 @@ try:
         print('\b' * len(positionStr), end='', flush=True)
         list_coordinates.append(tuple((x,y)))
 except KeyboardInterrupt:
-    plt.plot([x[0] for x in list_coordinates], [y[1] for y in list_coordinates])
+    plt.plot([(x[0]) for x in list_coordinates], [(1079 - y[1]) for y in list_coordinates])
     plt.show()
     print('\n')
