@@ -5,11 +5,11 @@
 import pyautogui
 import matplotlib.pyplot as plt
 import numpy as np
+# Package keyboard to recognise a key being pressed on.
 import keyboard
 import time
 
 print('Press Ctrl-C to quit.')
-
 list_coordinates = []
 try:
     while True:
@@ -27,6 +27,11 @@ except KeyboardInterrupt:
 
 def distance_finder(point1, point2):
     return np.sqrt((point1[0]-point2[0])**2 + (point1[1]-point2[1])**2)
+
+# Currently this model relies on having to draw a shape in one continuos stroke
+# Can take a break by leaving key 'q' but, need to resume 'q' from same place
+# In order to get correct answer and allow flexibility, need to introduce the idea of 'multiple strokes'
+# and only calculate distances within a stroke and sum the strokes later.
 
 small_dists = [distance_finder(list_coordinates[i], list_coordinates[i+1]) for i in range(0, len(list_coordinates)-1)]
 
