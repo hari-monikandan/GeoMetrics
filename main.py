@@ -74,12 +74,24 @@ class Sketchpad(Canvas):
         self.create_line(self.lastx, self.lasty, x, y)
         self.lastx, self.lasty = x, y
 
+
 root = Tk()
 root.title("GeoMetric Calculator")
 root.columnconfigure(0, weight=1)
-root.rowconfigure(0, weight=1)
+root.rowconfigure(0, weight=1)  # canvas row expands
+root.rowconfigure(1, weight=0)  # label row stays fixed
 
-sketch = Sketchpad(root)
+sketch = Sketchpad(root, bg="white")
 sketch.grid(column=0, row=0, sticky=(N, W, E, S))
+
+label = Label(root, text="Move your cursor around!")
+label.grid(column=0, row=1, pady=10)
+
+def on_mouse_motion(event):
+    height = root.winfo_height()
+    x, y = event.x, height - event.y
+    label.configure(text=f"Cursor Position: ({x}, {y})")
+
+root.bind('<Motion>', on_mouse_motion)
 
 root.mainloop()
