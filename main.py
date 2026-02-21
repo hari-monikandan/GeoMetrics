@@ -1,16 +1,24 @@
-import tkinter as tk
+from tkinter import *
+from tkinter import ttk
 
-root = tk.Tk()
-root.title("Cursor Tracker")
-root.geometry("400x300")
+class Sketchpad(Canvas):
+    def __init__(self, parent, **kwargs):
+        super().__init__(parent, **kwargs)
+        self.bind("<Button-1>", self.save_posn)
+        self.bind("<B1-Motion>", self.add_line)
 
-label = tk.Label(root, text="Move your cursor around!")
-label.pack(pady=50)
+    def save_posn(self, event):
+        self.lastx, self.lasty = event.x, event.y
 
-def on_mouse_motion(event):
-    height = root.winfo_height()
-    x, y = event.x, height - event.y
-    label.configure(text=f"Cursor Position: ({x}, {y})")
+    def add_line(self, event):
+        self.create_line(self.lastx, self.lasty, event.x, event.y)
+        self.save_posn(event)
 
-root.bind('<Motion>', on_mouse_motion)
+root = Tk()
+root.columnconfigure(0, weight=1)
+root.rowconfigure(0, weight=1)
+
+sketch = Sketchpad(root)
+sketch.grid(column=0, row=0, sticky=(N, W, E, S))
+
 root.mainloop()
