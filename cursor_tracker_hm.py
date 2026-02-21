@@ -8,9 +8,9 @@ label = tk.Label(root, text="Move your cursor around!")
 label.pack(pady=50)
 
 def on_mouse_motion(event):
-    x, y = event.x, event.y
     height = root.winfo_height()
-    label.configure(text=f"Cursor Position: ({x}, {height - y})")
+    x, y = event.x, height - event.y
+    label.configure(text=f"Cursor Position: ({x}, {y})")
 
 root.bind('<Motion>', on_mouse_motion)
 root.mainloop()
