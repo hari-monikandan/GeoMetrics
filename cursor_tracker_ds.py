@@ -39,43 +39,39 @@
 
 # print(sum(small_dists))
 
-import tkinter as tk
-import matplotlib.pyplot as plt
-import numpy as np
-import mouse
+from tkinter import *
+from tkinter import ttk
 
-root = tk.Tk()
-root.title("Cursor Tracker")
-root.geometry("400x300")
+class Sketchpad(Canvas):
+    def __init__(self, parent, **kwargs):
+        super().__init__(parent, **kwargs)
+        self.margin = 50
 
-label = tk.Label(root, text="Move your cursor around!")
-label.pack(pady=50)
+        self.bind("<Button-1>", self.save_posn)
+        self.bind("<B1-Motion>", self.add_line)
+        self.bind("<Configure>", self.draw_axes)
 
-list_coordinates = []
+    def draw_axes(self, event=None):
+        self.delete("axes")
+        w = self.winfo_width()
+        h = self.winfo_height()
+        m = self.margin
 
-def mouse_click(event):
-    height = root.winfo_height()
-    x, y = event.x, height - event.y
-    list_coordinates.append((x, y))
+        self.create_line(m, h - m, w - m, h - m, width=2, arrow=LAST, tags="axes")
+        self.create_line(m, h - m, m, m, width=2, arrow=LAST, tags="axes")
 
-def on_mouse_motion(event):
-    height = root.winfo_height()
-    x, y = event.x, height - event.y
-    label.configure(text=f"Cursor Position: ({x}, {y})")
-    
-    # 0x0100 = left mouse button held
-    if event.state & 0x0100:
-        list_coordinates.append((x, y))
+    def save_posn(self, event):
+        self.lastx, self.lasty = event.x, event.y
 
-#root.bind("<Button-1>", mouse_click)
-#root.bind("<B1-Motion>", mouse_click) 
+    def add_line(self, event):
+        self.create_line(self.lastx, self.lasty, event.x, event.y)
+        self.save_posn(event)
 
-root.bind('<Motion>', on_mouse_motion)
+root = Tk()
+root.columnconfigure(0, weight=1)
+root.rowconfigure(0, weight=1)
+
+sketch = Sketchpad(root)
+sketch.grid(column=0, row=0, sticky=(N, W, E, S))
+
 root.mainloop()
-
-def distance_finder(point1, point2):
-     return np.sqrt((point1[0]-point2[0])**2 + (point1[1]-point2[1])**2)
-
-small_dists = [distance_finder(list_coordinates[i], list_coordinates[i+1]) for i in range(0, len(list_coordinates)-1)]
-
-print(sum(small_dists))
