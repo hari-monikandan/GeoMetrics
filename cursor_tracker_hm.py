@@ -9,7 +9,8 @@ label.pack(pady=50)
 
 def on_mouse_motion(event):
     x, y = event.x, event.y
-    label.configure(text=f"Cursor Position: ({x}, {y})")
+    height = root.winfo_height()
+    label.configure(text=f"Cursor Position: ({x}, {height - y})")
 
 root.bind('<Motion>', on_mouse_motion)
 root.mainloop()
